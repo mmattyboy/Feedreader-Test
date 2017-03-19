@@ -27,7 +27,7 @@ $(function() {
         });
 
 
-        /* TODO: Write a test that loops through each feed
+        /* test that loops through each feed
          * in the allFeeds object and ensures it has a URL defined
          * and that the URL is not empty.
          */
@@ -39,7 +39,7 @@ $(function() {
          });
 
 
-        /* TODO: Write a test that loops through each feed
+        /* a test that loops through each feed
          * in the allFeeds object and ensures it has a name defined
          * and that the name is not empty.
          */
@@ -51,11 +51,14 @@ $(function() {
         });
     });
 
-// test suite named 'The menu': 1) a test that ensures the menu element is hidden by default. 
-// 2) a test that ensures the menu changes visibility when the menu icon is clicked.
+
 
           
     describe('The menu', function() {
+// test suite named 'The menu': 1) a test that ensures the menu element is hidden by default. 
+// 2) a test that ensures the menu changes visibility when the menu icon is clicked.
+
+
         it('is hidden by default', function() {
             expect($( "body" ).hasClass( "menu-hidden" )).toBe(true);
         });  
@@ -76,9 +79,6 @@ $(function() {
 
     });
 
-        
-
-    /* TODO: Write a new test suite named "Initial Entries" */
 
     describe('Initial Entries', function() {
         // a test that ensures when the loadFeed function is called
@@ -92,11 +92,9 @@ $(function() {
             loadFeed(1, done);     
         });
 
-        it('has at least one entry element in .feed container', function(done) {
-            var $feed = $( ".feed" );
-            var $entry = $feed.find(".entry");
+        it('has at least one entry element in .feed container', function() {
+            var $entry = $( ".entry" );
             expect($entry.length).toBeGreaterThan(0);
-            done();
         });
         
         
@@ -110,10 +108,18 @@ $(function() {
         var firstFeed;
         var secondFeed;
         // load the first id: 0
-        // text() returned is a long string of all the h2 of the articles
-        beforeEach(function() {
+        // text() returned is a long string of all the h2 of the articles for id: 0
+        /* the first parameter represents the id, which is the number representation
+        of the different subject articles to load, there are 4 (0 - 3) id's according
+        to app.js */
+
+        /* beforeEach is Jasmine function to support asynchronous operations, it is used
+        with done() to ensure that all asynchronous objects are loaded and then done() 
+        will be called to let browser Jasmine know that it is 'done' loading */
+        beforeEach(function(done) {
             loadFeed(0, function() {
                 firstFeed = $(".entry").children('h2').text();
+                done();
             });
         });
         // load the second id: 1, done() when finish loading
@@ -124,9 +130,8 @@ $(function() {
             });
         });
 
-        it('ensures new feed content actually changes', function(done) {
+        it('ensures new feed content actually changes', function() {
             expect(firstFeed).not.toEqual(secondFeed);
-            done();
         });
     });
 
